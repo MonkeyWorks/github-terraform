@@ -1,0 +1,67 @@
+# This is a basic workflow to help you get started with Actions
+
+name: web
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    paths:
+      -'github-terraform/workspacesM7/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      action_type:
+        description: 'What action should be performed? (apply/destroy)'
+        required: true
+        default: 'apply'
+        type: choice
+        options:
+          - 'apply'
+          - 'destroy'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "resourcegroups"
+  resourcegroups:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+    
+    name: 'web'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      WORKING_DIR: ./github-terraform/workspacesM7
+      
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: 'Terraform init'
+        id: init
+        run: terraform init
+        working-directory: ${{ env.WORKING._DIR }}
+
+      - name: 'Terraform plan'
+        id: plan
+        run: terraform plan
+        working-directory: ${{ env.WORKING._DIR }}
+
+      - name: 'Terraform apply'
+        if: github.event.inputs.action_type == 'apply'
+        id: apply
+        run: terraform apply -auto-approve
+        working-directory: ${{ env.WORKING._DIR }}
+
+      - name: 'Terraform destroy'
+        if: github.event.inputs.action_type == 'destroy'
+        id: destroy
+        run: terraform destroy -auto-approve
+        working-directory: ${{ env.WORKING._DIR }}
+        
