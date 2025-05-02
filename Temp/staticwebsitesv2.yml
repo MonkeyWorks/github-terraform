@@ -52,5 +52,6 @@ jobs:
             terraform destroy -auto-approve
           else
             terraform apply -auto-approve
+          fi
         working-directory: ${{ env.WORKING._DIR }}
 
