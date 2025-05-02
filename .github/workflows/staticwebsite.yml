@@ -44,11 +44,6 @@ jobs:
         run: terraform plan
         working-directory: ${{ env.WORKING._DIR }}
 
-      - name: 'Terraform format'
-        id: fmt
-        run: terraform fmt
-        working-directory: ${{ env.WORKING._DIR }}
-
       - name: 'Terraform apply'
         id: apply
         run: terraform apply -auto-approve
