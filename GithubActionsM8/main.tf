@@ -48,3 +48,5 @@ resource "azurerm_storage_blob" "index_html" {
 output "primary_web_endpoint" {
   value = azurerm_storage_account.sa_mw.primary_web_endpoint
 }
+
+#Test push create
