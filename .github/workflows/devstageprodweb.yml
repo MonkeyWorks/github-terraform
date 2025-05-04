@@ -40,7 +40,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Test dev'
-        run: curl ${terraform output -raw primary_web_endpoint}
+        run: curl $(terraform output -raw primary_web_endpoint)
         working-directory: ${{ env.WORKING_DIR }}
 
   stage_prod:
@@ -64,7 +64,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Test stage'
-        run: curl ${terraform output -raw primary_web_endpoint}
+        run: curl $(terraform output -raw primary_web_endpoint)
         working-directory: ${{ env.WORKING_DIR }}
 
   prod:
@@ -92,7 +92,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Test prod'
-        run: curl ${terraform output -raw primary_web_endpoint}
+        run: curl $(terraform output -raw primary_web_endpoint)
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Get Web Endpoint'
