@@ -49,4 +49,4 @@ output "primary_web_endpoint" {
   value = azurerm_storage_account.sa_mw.primary_web_endpoint
 }
 
-#Test change web title
+#Test destroy
