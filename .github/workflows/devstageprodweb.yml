@@ -36,7 +36,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Terraform apply dev'
-        run: Terraform apply -auto-approve
+        run: terraform apply -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Test dev'
@@ -60,7 +60,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Terraform apply stage'
-        run: Terraform apply -auto-approve
+        run: terraform apply -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Test stage'
@@ -88,7 +88,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Terraform apply prod'
-        run: Terraform apply -auto-approve
+        run: terraform apply -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Test prod'
