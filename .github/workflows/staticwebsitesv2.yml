@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     paths:
-      - 'workspacesM7/**'
+      - 'GithubActionsM8/**'
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -23,7 +23,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: ./workspacesM7
+      WORKING_DIR: ./GithubActionsM8
       
     
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -44,11 +44,13 @@ jobs:
 
       - name: 'Check last commit message'
         id: commit
-        run: echo "::set-output name=message::$(git log --format%B -n 1)"
+        #AI informed about updated syntax
+        run: |
+         echo "message=$(git log --format%B -n 1)" >> $GITHUB_OUTPUT
       
       - name: 'Conditionally run Terraform action'
         run: |
-          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]], then
+          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
             terraform destroy -auto-approve
           else
             terraform apply -auto-approve
