@@ -64,7 +64,7 @@ resource "azurerm_storage_blob" "sb_sb" {
   storage_account_name   = azurerm_storage_account.sa_mw.name
   storage_container_name = azurerm_storage_container.sc_sb.name
   type                   = "Block"
-  source_content = "${(var.sb_content)} from workspace ${(local.ls_ws_suffix)}"
+  source_content         = "${(var.sb_content)} from workspace ${(local.ls_ws_suffix)}"
 }
 
-# Test validate
+# fmt
