@@ -56,15 +56,19 @@ output "primary_web_endpoint" {
 resource "azurerm_storage_container" "sc_sb" {
   name                  = "${lower(var.sc_name)}-${lower(local.ls_ws_suffix)}"
   storage_account_id    = azurerm_storage_account.sa_mw.id
-  container_access_type = "private"
+  container_access_type = "blob"
+
+  depends_on = [azurerm_storage_account.sa_mw]
 }
 
 resource "azurerm_storage_blob" "sb_sb" {
-  name                   = "${(var.sb_content_name)}-${(local.ls_web_suffix)}${(var.sb_content_name_extension)}"
+  name                   = "${(var.sb_content_name)}-${(local.ls_ws_suffix)}${(var.sb_content_name_extension)}"
   storage_account_name   = azurerm_storage_account.sa_mw.name
   storage_container_name = azurerm_storage_container.sc_sb.name
   type                   = "Block"
   source_content         = "${(var.sb_content)} from workspace ${(local.ls_ws_suffix)}"
+
+  depends_on = [azurerm_storage_container.sc_sb]
 }
 
 output "blob_url" {
