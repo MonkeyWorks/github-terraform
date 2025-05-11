@@ -1,16 +1,15 @@
-name: Validate Infrastructure M9
+name: Deploy Main Branch M9
 
 on:
-
     push:
-      branches-ignore:
+      branches:
         - 'main'
       paths:
         - 'GithubActionsM8/**'
 
 jobs:
     terraform:
-        name: 'Validate'
+        name: 'deploy main infrastructure'
 
         runs-on: ubuntu-22.04
 
@@ -35,5 +34,12 @@ jobs:
               run: terraform validate
               working-directory: ${{env.WORKING_DIR}}
 
+            - name: Terraform Plan
+              id: plan
+              run: terraform plan
+              working-directory: ${{env.WORKING_DIR}}
 
-
+            - name: Terraform apply
+              id: apply
+              run: terraform apply
+              working-directory: ${{env.WORKING_DIR}}
