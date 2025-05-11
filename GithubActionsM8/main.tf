@@ -56,7 +56,7 @@ output "primary_web_endpoint" {
 resource "azurerm_storage_container" "sc_sb" {
   name                  = "${lower(var.sc_name)}-${lower(local.ls_ws_suffix)}"
   storage_account_id    = azurerm_storage_account.sa_mw.id
-  container_access_type = "private"
+  container_access_type = "blob"
 
   depends_on = [azurerm_storage_account.sa_mw]
 }
