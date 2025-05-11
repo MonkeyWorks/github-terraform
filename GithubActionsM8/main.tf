@@ -67,4 +67,6 @@ resource "azurerm_storage_blob" "sb_sb" {
   source_content         = "${(var.sb_content)} from workspace ${(local.ls_ws_suffix)}"
 }
 
-# fmt
+output "blob_url" {
+  value = azurerm_storage_blob.sb_sb.url
+}
