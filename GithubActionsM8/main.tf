@@ -66,3 +66,5 @@ resource "azurerm_storage_blob" "sb_sb" {
   type                   = "Block"
   source_content = "${(var.sb_content)} from workspace ${(local.ls_ws_suffix)}"
 }
+
+# Test validate
