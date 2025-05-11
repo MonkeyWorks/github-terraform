@@ -29,3 +29,35 @@ variable "source_content" {
   default = "<h1>Made with Terraform - CI/CD:</h1>"
 }
 
+#Storage blob
+
+variable "sc_name" {
+  type = string
+  description = "Storage container for storage blob"
+  default = "storcount"  
+}
+
+variable "sb_name" {
+  type = string
+  description = "Storage blob for files"
+  default = "storblob"
+}
+
+variable "sb_content_name" {
+  type = string
+  description = "File name"
+  default = "HelloWorld"
+}
+
+variable "sb_content_name_extension" {
+  type = string
+  description = "File extension type"
+  default = ".txt"
+}
+
+variable "sb_content" {
+  type = string
+  description = "File content"
+  default = "\"Hello World\""
+  
+}
