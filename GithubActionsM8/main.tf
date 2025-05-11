@@ -45,8 +45,26 @@ resource "azurerm_storage_blob" "index_html" {
   depends_on = [azurerm_storage_account_static_website.sa_sw_mw]
 }
 
+
 output "primary_web_endpoint" {
   value = azurerm_storage_account.sa_mw.primary_web_endpoint
 }
 
-#Test destroy
+# Storage blob for file
+
+
+resource "azurerm_storage_container" "sc_sb" {
+  name                  = "${lower(var.sc_name)}-${lower(local.ls_ws_suffix)}"
+  storage_account_id    = azurerm_storage_account.sa_mw.id
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "sb_sb" {
+  name                   = "${(var.sb_content_name)}-${(local.ls_web_suffix)}${(var.sb_content_name_extension)}"
+  storage_account_name   = azurerm_storage_account.sa_mw.name
+  storage_container_name = azurerm_storage_container.sc_sb.name
+  type                   = "Block"
+  source_content         = "${(var.sb_content)} from workspace ${(local.ls_ws_suffix)}"
+}
+
+# fmt
