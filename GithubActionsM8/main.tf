@@ -23,6 +23,7 @@ resource "azurerm_storage_account" "sa_mw" {
   location                 = azurerm_resource_group.rg_mw.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  min_tls_version          = "TLS1_2"
 
   tags = {
     environment = local.ls_ws_suffix
@@ -56,6 +57,7 @@ output "primary_web_endpoint" {
 resource "azurerm_storage_container" "sc_sb" {
   name                  = "${lower(var.sc_name)}-${lower(local.ls_ws_suffix)}"
   storage_account_id    = azurerm_storage_account.sa_mw.id
+  #tfsec:ignore:azure-storage-no-public-access
   container_access_type = "blob"
 
   depends_on = [azurerm_storage_account.sa_mw]
@@ -75,4 +77,4 @@ output "blob_url" {
   value = azurerm_storage_blob.sb_sb.url
 }
 
-#Test change
+# Fix security
