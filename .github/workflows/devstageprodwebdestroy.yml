@@ -20,6 +20,25 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  default_destroy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: 'Terraform init'
+        run: terraform init
+        working-directory: ${{ env.WORKING_DIR }}
+
+      - name: 'Terraform workspace select'
+        run: terraform workspace select default
+        working-directory: ${{ env.WORKING_DIR }}
+
+      - name: 'Terraform destroy default'
+        run: terraform destroy -auto-approve
+        working-directory: ${{ env.WORKING_DIR }}
+
   dev_destroy:
     runs-on: ubuntu-22.04
     steps:
